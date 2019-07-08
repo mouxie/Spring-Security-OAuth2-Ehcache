@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache>
+    <!-- EhCache RMI Sync  -->
+    <cacheManagerPeerProviderFactory
+            class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+            properties="
+            peerDiscovery=automatic,
+            multicastGroupAddress=231.0.0.1,
+            multicastGroupPort=3030,
+            timeToLive=32"/>
+    <cacheManagerPeerListenerFactory
+            class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"/>
+            
+    <defaultCache
+            maxElementsInMemory="1000"
+            eternal="false"
+            timeToIdleSeconds="3600"
+            memoryStoreEvictionPolicy="LRU"
+            timeToLiveSeconds="3600">
+    </defaultCache>
+    
+    <cache name="accessTokenStore"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           memoryStoreEvictionPolicy="LRU"
+           timeToLiveSeconds="3600">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicateAsynchronously=true,  replicatePuts=true, replicateUpdates=true,  replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory" properties="bootstrapAsynchronously=true" />
+    </cache>
+    
+    <cache name="authenticationStore"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           memoryStoreEvictionPolicy="LRU"
+           timeToLiveSeconds="3600">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicateAsynchronously=true,  replicatePuts=true, replicateUpdates=true,  replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory" properties="bootstrapAsynchronously=true" />
+    </cache>
+    
+    <cache name="authenticationToAccessTokenStore"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           memoryStoreEvictionPolicy="LRU"
+           timeToLiveSeconds="3600">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicateAsynchronously=true,  replicatePuts=true, replicateUpdates=true,  replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory" properties="bootstrapAsynchronously=true" />
+    </cache>
+    
+    <cache name="userNameToAccessTokenStore"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToIdleSeconds="2592000"
+           memoryStoreEvictionPolicy="LRU"
+           timeToLiveSeconds="2592000">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicateAsynchronously=true,  replicatePuts=true, replicateUpdates=true,  replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory" properties="bootstrapAsynchronously=true" />
+    </cache>
+    
+    <cache name="clientIdToAccessTokenStore"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToIdleSeconds="2592000"
+           memoryStoreEvictionPolicy="LRU"
+           timeToLiveSeconds="2592000">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicateAsynchronously=true,  replicatePuts=true, replicateUpdates=true,  replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory" properties="bootstrapAsynchronously=true" />
+    </cache>
+    
+    <cache name="refreshTokenToAccessTokenStore"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           memoryStoreEvictionPolicy="LRU"
+           timeToLiveSeconds="3600">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicateAsynchronously=true,  replicatePuts=true, replicateUpdates=true,  replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory" properties="bootstrapAsynchronously=true" />
+    </cache>
+    
+    <cache name="accessTokenToRefreshTokenStore"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           memoryStoreEvictionPolicy="LRU"
+           timeToLiveSeconds="3600">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicateAsynchronously=true,  replicatePuts=true, replicateUpdates=true,  replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory" properties="bootstrapAsynchronously=true" />
+    </cache>
+    
+    <cache name="refreshTokenStore"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           memoryStoreEvictionPolicy="LRU"
+           timeToLiveSeconds="3600">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicateAsynchronously=true,  replicatePuts=true, replicateUpdates=true,  replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory" properties="bootstrapAsynchronously=true" />
+    </cache>
+    
+    <cache name="refreshTokenAuthenticationStore"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           memoryStoreEvictionPolicy="LRU"
+           timeToLiveSeconds="3600">
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                                   properties="replicateAsynchronously=true,  replicatePuts=true, replicateUpdates=true,  replicateUpdatesViaCopy=true, replicateRemovals=true"/>
+        <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory" properties="bootstrapAsynchronously=true" />
+    </cache>
+    
+</ehcache>

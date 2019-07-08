@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2-2.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd 
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd ">
+
+	<authentication-manager id="clientAuthenticationManager"
+		xmlns="http://www.springframework.org/schema/security">
+		<authentication-provider user-service-ref="clientDetailsUserService" />
+	</authentication-manager>
+
+ 	<authentication-manager alias="authenticationManager"
+		xmlns="http://www.springframework.org/schema/security">
+		<authentication-provider>
+			<user-service>
+				<user name="user" password="123456" authorities="ROLE_USER" />
+			</user-service>
+		</authentication-provider>
+	</authentication-manager>
+
+	<bean id="clientDetailsUserService"
+		class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
+		<constructor-arg ref="clientDetails" />
+	</bean>
+	
+	<oauth:client-details-service id="clientDetails">
+
+		<oauth:client client-id="myclient"
+			authorized-grant-types="authorization_code,client_credentials"
+			authorities="ROLE_USER" scope="read,write,trust" secret="mysecret" />
+
+		<oauth:client client-id="myclient2"
+			authorized-grant-types="password,authorization_code,client_credentials,refresh_token,implicit"
+			secret="mysecret2" authorities="ROLE_USER" />
+
+	</oauth:client-details-service>
+
+ 	<!-- <bean id="tokenStore"
+		class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore" /> -->
+
+	<bean id="tokenServices"
+		class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
+		<property name="tokenStore" ref="tokenStore" />
+		<property name="supportRefreshToken" value="true" />
+		<property name="accessTokenValiditySeconds" value="300" />
+		<property name="clientDetailsService" ref="clientDetails" />
+	</bean>
+
+	<oauth:authorization-server
+		client-details-service-ref="clientDetails" token-services-ref="tokenServices"  check-token-enabled="false">
+		<oauth:authorization-code />
+		<oauth:implicit />
+		<oauth:refresh-token />
+		<oauth:client-credentials />
+		<oauth:password />
+	</oauth:authorization-server>
+
+	<oauth:expression-handler id="oauthExpressionHandler" />
+	<oauth:web-expression-handler id="oauthWebExpressionHandler" />
+	
+	<!-- EhcacheTokenStore start -->
+ 	<context:annotation-config />
+    <bean id="oauthCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" lazy-init="true">
+    	<property name="cacheManagerName" value="oauthCacheManager"></property>
+        <property name="configLocation" value="/WEB-INF/ehcache.xml"></property>
+    </bean>
+	<bean id="tokenStore"
+		class="com.yanmouxie.oauth2.ehcache.EhcacheTokenStore" lazy-init="true">
+    </bean>
+    <!-- EhcacheTokenStore end -->
+    
+</beans>
