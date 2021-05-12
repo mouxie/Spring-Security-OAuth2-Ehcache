@@ -15,7 +15,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<spring.version>4.3.18.RELEASE</spring.version>
-		<spring.security.version>3.2.5.RELEASE</spring.security.version>
+		<spring.security.version>5.2.10.RELEASE</spring.security.version>
 		<spring.security.oauth.version>2.3.6.RELEASE</spring.security.oauth.version>
 		<ehcache.version>2.10.5</ehcache.version>
 		<maven-war-plugin.version>2.6</maven-war-plugin.version>
